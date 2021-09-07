@@ -1,8 +1,8 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class OrdenaStrings {
     public static void main(String[] args) {
@@ -11,13 +11,15 @@ public class OrdenaStrings {
         palavras.add("casa do código");
         palavras.add("caelum");
 
-        palavras.sort(new Comparator<String>() {
-        @Override
-        public int compare(String o1, String o2) {
-            return o1.length() - o2.length();
-        }});
+        Function<String, Integer> funcao = s -> s.length(); //lambda é uma experssão do dia dia
+        //mas é uma instância de uma interface funcional chamada Function
+        Function<String, Integer> funcao1 = String :: length; //referência ao método - reference method
 
-        palavras.forEach( s -> System.out.println(s));
+        Comparator<String> comparador = Comparator.comparing(funcao);
+        palavras.sort(comparador);
+        palavras.sort(String.CASE_INSENSITIVE_ORDER);
+        palavras.forEach(System.out::println);
+
 
     }
 }
